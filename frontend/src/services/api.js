@@ -1,4 +1,5 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
+const API_URL = import.meta.env.VITE_API_URL
+  || (import.meta.env.DEV ? 'http://localhost:4000/api' : '/api');
 
 export async function api(path, options = {}) {
   let response;
@@ -11,8 +12,11 @@ export async function api(path, options = {}) {
     });
   } catch (error) {
     if (error instanceof TypeError) {
+      const guidance = import.meta.env.DEV
+        ? 'Start both servers with "npm run dev" from the project folder.'
+        : 'Check that the FoodLoop service is running.';
       throw new Error(
-        `FoodLoop can't reach its API at ${API_URL}. Start both servers with "npm run dev" from the project folder. For persistent data, configure backend/.env with MONGODB_URI and a unique 32+ character JWT_SECRET.`
+        `FoodLoop can't reach its API at ${API_URL}. ${guidance} For persistent data, configure MONGODB_URI and a unique 32+ character JWT_SECRET in the service environment.`
       );
     }
     throw error;

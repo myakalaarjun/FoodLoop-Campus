@@ -27,6 +27,17 @@ For local development only, if `MONGODB_URI` is not set and `NODE_ENV` is not `p
 
 If the browser reports that it cannot reach the API, check that the backend server is running on port 4000. If it exits at startup, configure the missing `MONGODB_URI` and `JWT_SECRET` in `backend/.env`; the frontend does not mock registration or database operations.
 
+## Deploy to Render
+
+The repository includes a `render.yaml` Blueprint that deploys the frontend and API together as one Node web service. This keeps API calls and secure sign-in cookies on the same origin.
+
+1. Create a MongoDB Atlas database and copy its connection string. Configure Atlas Network Access to allow connections from Render.
+2. In Render, select **New + → Blueprint**, connect this GitHub repository, and apply the `render.yaml` configuration.
+3. When prompted, provide `MONGODB_URI`. Render generates `JWT_SECRET`; keep both values private.
+4. Wait for the service to deploy, then open its `onrender.com` URL. Verify the API health endpoint at `/api/health`.
+
+The service builds the Vite frontend and serves it from Express. Render handles HTTPS and supplies the `PORT` environment variable. Do not set `CLIENT_ORIGIN` for this single-service deployment.
+
 ## Fictional demo data
 
 To create repeatable fictional donor, verified-recipient, volunteer, and listing records:
