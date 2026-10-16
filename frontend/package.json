@@ -17,8 +17,8 @@
     "vite": "^6.0.7"
   },
   "devDependencies": {
-    "postcss": "^8.4.49",
     "@tailwindcss/postcss": "^4.3.3",
+    "postcss": "^8.4.49",
     "tailwindcss": "^4.3.3"
   }
 }
